@@ -1,0 +1,29 @@
+<div fxFlexFill fxLayout="column">
+  <mat-toolbar fxFlex="60px">
+    <h3>Entrada y salida de vehiculos</h3>
+    <span fxFlex></span>
+    <button mat-raised-button color="accent" fxHide.gt-sm matTooltip="Agregar entrada" *ngIf="inputTab.isActive"
+            routerLink="input/new">
+      <mat-icon fontIcon="fa-plus" class="fa-mat"></mat-icon>
+    </button>
+  </mat-toolbar>
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link
+       routerLink="input"
+       routerLinkActive #inputTab="routerLinkActive"
+       [active]="inputTab.isActive">
+      Entrada
+    </a>
+    <a mat-tab-link
+       routerLink="output"
+       routerLinkActive #outputTab="routerLinkActive"
+       [active]="outputTab.isActive">
+      Salida
+    </a>
+  </nav>
+  <router-outlet></router-outlet>
+  <button mat-fab class="plus-fab-button" routerLink="input/new" fxHide fxShow.gt-sm matTooltip="Agregar entrada"
+          *ngIf="inputTab.isActive">
+    <mat-icon fontIcon="fa-plus" class="fa-mat"></mat-icon>
+  </button>
+</div>

@@ -1,0 +1,49 @@
+<div fxLayout="row" fxLayoutAlign="center" fxFlexFill>
+  <div fxFlex="75" fxFlex.gt-md="40" fxLayout="column" fxLayoutAlign="center" fxFlexFill>
+    <div fxFlex="80" fxFlex.gt-md="65">
+      <form #loginForm="ngForm" (ngSubmit)="doLogin()" novalidate>
+        <mat-card>
+          <img src="assets/images/logo.png" style="height: 180px !important;"/>
+          <mat-card-header class="full-width" fxLayoutAlign="center">
+            <mat-card-title>
+              <h1>EXAPesa</h1>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div fxLayout="row" fxLayoutAlign="center">
+              <div fxFlex fxFlex.gt-md="80" fxLayout="column">
+                <div fxFlex>
+                  <mat-input-container class="full-width">
+                    <input matInput required type="text" placeholder="Usuario" name="login"
+                           [formControl]="loginFormControl"/>
+                    <mat-icon matPrefix fontIcon="fa-user"></mat-icon>
+                    <mat-error *ngIf="loginFormControl.hasError('pattern')">
+                      Por favor, ingrese un nombre de usuario válido
+                    </mat-error>
+                    <mat-error *ngIf="loginFormControl.hasError('required')">
+                      Por favor, ingrese un nombre de usuario para continuar
+                    </mat-error>
+                  </mat-input-container>
+                </div>
+                <br>
+                <div fxFlex>
+                  <mat-input-container class="full-width">
+                    <input matInput required type="password" placeholder="Contraseña" name="password"
+                           [formControl]="passwordFormControl"/>
+                    <mat-icon matPrefix fontIcon="fa-lock"></mat-icon>
+                    <mat-error *ngIf="passwordFormControl.hasError('required')">
+                      Por favor, ingrese una contraseña para continuar
+                    </mat-error>
+                  </mat-input-container>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions fxLayoutAlign="center">
+            <button mat-raised-button color="primary" type="submit">Iniciar Sesión</button>
+          </mat-card-actions>
+        </mat-card>
+      </form>
+    </div>
+  </div>
+</div>

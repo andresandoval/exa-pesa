@@ -1,0 +1,17 @@
+#LOGGING
+logging:
+  file: application.log
+  level: INFO
+
+#REST SETTINGS
+=${exa_server_port}
+exa.client-origin=${exa_client_url}
+exa.client-allowed-methods=GET, POST, PUT, PATCH, OPTIONS
+exa.client-allowed-pattern=/**
+server:
+  port: ${exa_server_port}
+
+exa:
+  client-origin: ${exa_client_url}
+  client-allowed-methods: GET, POST, PUT, PATCH, OPTIONS
+  exa.client-allowed-pattern=/**

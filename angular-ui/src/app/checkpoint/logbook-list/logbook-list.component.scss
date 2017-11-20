@@ -1,0 +1,13 @@
+@import "../../../styles/mixins";
+
+:host{
+
+  .plus-fab-button{
+    @include fixed-fab-button();
+  }
+
+  .top-margin{
+    margin-top: 50px;
+  }
+
+}

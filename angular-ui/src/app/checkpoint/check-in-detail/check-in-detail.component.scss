@@ -1,0 +1,43 @@
+@import "../../../styles/mixins";
+
+:host {
+
+  & {
+  }
+
+  mat-card {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .fab-button-save {
+    @include fixed-fab-button();
+  }
+
+  table th {
+    text-align: right;
+  }
+
+  h3.numbers {
+    & {
+      margin: 0px;
+    }
+
+    &.detached {
+      & {
+        position: relative;
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: calc(50% - 2px);
+        left: -8px;
+        right: -8px;
+        height: 4px;
+        background: #000;
+      }
+    }
+  }
+
+}

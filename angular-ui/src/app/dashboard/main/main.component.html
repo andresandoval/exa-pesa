@@ -1,0 +1,33 @@
+<div fxFlexFill fxLayout="column" *ngIf="allowedAccess | async; else login; let allowed">
+  <mat-toolbar color="primary" fxFlex="60px">
+      <span [hidden]="isDesktopViewport">
+          <button mat-icon-button (click)="appSidenav.toggle()">
+            <mat-icon fontIcon="fa-bars" class="fa-lg"></mat-icon>
+          </button>
+      </span>
+    <span routerLink="/" class="business-name">
+      EXAPesa
+    </span>
+    <span fxFlex></span>
+    <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon fontIcon="fa-user" class="fa-mat"></mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="closeSession()">
+        <mat-icon fontIcon="fa-sign-out" class="fa-mat"></mat-icon>
+        Cerrar sesión
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+  <mat-sidenav-container fxFlex>
+    <mat-sidenav [mode]="isDesktopViewport ? 'side' : 'over'" [opened]="isDesktopViewport" #appSidenav class="mat-elevation-z6 app-sidenav">
+      <exp-menu></exp-menu>
+    </mat-sidenav>
+    <div class="app-body">
+      <router-outlet (activate)="!isDesktopViewport && appSidenav.close()"></router-outlet>
+    </div>
+  </mat-sidenav-container>
+</div>
+<ng-template #login>
+  <exp-login></exp-login>
+</ng-template>

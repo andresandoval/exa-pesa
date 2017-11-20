@@ -1,0 +1,7 @@
+@import "variables";
+
+@mixin fixed-fab-button($index : 0) {
+  position: absolute;
+  right: $fab-rigth-position;
+  bottom: $fab-start-bottom-position + ($fab-button-size * $index) + ($fab-button-spacing * $index);
+}

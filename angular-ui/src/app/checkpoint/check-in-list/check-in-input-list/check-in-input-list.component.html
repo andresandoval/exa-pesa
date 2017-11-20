@@ -1,0 +1,29 @@
+<ng-container *ngIf="checkInList | async; else loadingData; let ciList">
+  <mat-list *ngIf="ciList?.length > 0; else emptyData">
+    <ng-container *ngFor="let checkIn of ciList">
+      <mat-list-item>
+        <button matListAvatar mat-icon-button matTooltip="Editar" [routerLink]="['../input/edit', checkIn.id]">
+          <mat-icon fontIcon="fa-pencil" class="avatar-font-icon"></mat-icon>
+        </button>
+        <h3 mat-line> Ticket #: {{checkIn.tiketNumber }}</h3>
+        <h3 mat-line> Ingreso #: {{checkIn.lotCode }}</h3>
+        <div mat-line>Fecha ingreso: {{checkIn.inputDate | date:'yyyy-MMM-dd, HH:mm:ss'}}</div>
+        <div mat-line>Tipo ingreso: {{checkIn.entryType.name}}</div>
+        <div mat-line>Vehiculo: {{checkIn.transport.plate }} : {{checkIn.transport.description }}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-list>
+</ng-container>
+<ng-template #loadingData>
+  <div style="margin: 25px 0px">
+    Cargando registros...
+  </div>
+</ng-template>
+<ng-template #emptyData>
+  <div fxLayout fxFlex fxLayoutAlign="center center">
+    <div fxFlex="80" style="margin: 25px 0px; text-align: center">
+      No hay registros para mostrar
+    </div>
+  </div>
+</ng-template>

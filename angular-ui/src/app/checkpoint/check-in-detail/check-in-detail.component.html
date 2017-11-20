@@ -1,0 +1,108 @@
+<mat-toolbar>
+  <button mat-icon-button [routerLink]="listRouterLink">
+    <mat-icon fontIcon="fa-arrow-left" class="fa-lg"></mat-icon>
+  </button>
+  <h3>{{title}}</h3>
+  <span fxFlex></span>
+  <button mat-raised-button color="primary" fxHide.gt-sm matTooltip="Guardar cambios"
+          type="submit" form="mainForm">
+    <mat-icon fontIcon="fa-floppy-o" class="fa-mat"></mat-icon>
+  </button>
+</mat-toolbar>
+<form novalidate (ngSubmit)="submitForm()" (keydown.enter)="$event.preventDefault()" id="mainForm" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="center">
+    <div fxFlex fxFlex="90" fxFlex.gt-sm="60">
+      <mat-card>
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center center">
+          <div fxFlex>
+            <table>
+              <tr>
+                <th>Tiquet # :</th>
+                <td>
+                  <mat-chip-list>
+                    <mat-chip color="primary" selected="true">
+                      <h3 class="numbers">{{tiketNumber}}</h3>
+                    </mat-chip>
+                  </mat-chip-list>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div fxFlex>
+            <table>
+              <tr>
+                <th>Ingreso # :</th>
+                <td>
+                  <mat-chip-list>
+                    <mat-chip color="accent" selected="true">
+                      <h3 class="numbers" [ngClass]="{detached: form.get('entryTypeId').value == 4}">{{lotCode}}</h3>
+                    </mat-chip>
+                  </mat-chip-list>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center" style="margin-top: 10px">
+    <div fxFlex="90" fxFlex.gt-sm="80">
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center" fxLayoutGap="20px">
+        <div fxFlex fxFlex.gt-sm="50">
+          <div fxLayout="column">
+            <div fxFlex>
+              <mat-form-field class="full-width">
+                <input type="text" placeholder="Placa del vehiculo" formControlName="vehicle" matInput
+                       [matAutocomplete]="vehicleAutocomplete" required>
+                <mat-autocomplete #vehicleAutocomplete="matAutocomplete" [displayWith]="vehicleDisplay">
+                  <mat-option *ngFor="let vehicle of vehicleList | async" [value]="vehicle">
+                    {{ vehicle.plate }}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-hint *ngIf="form.get('vehicle').valid">
+                  {{form.get('vehicle').value.type}}, {{form.get('vehicle').value.description}}
+                </mat-hint>
+                <mat-error
+                  *ngIf="form.controls.vehicle.hasError('required') || form.controls.vehicle.hasError('invalidAutoOption')">
+                  Debe seleccionar un vehiculo de la lista
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex style="padding-top: 15px">
+              <mat-checkbox formControlName="meetsConditions">Vehiculo cumple condiciones</mat-checkbox>
+            </div>
+          </div>
+        </div>
+        <div fxFlex fxFlex.gt-sm="50">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Transaccion a realizar" formControlName="entryTypeId" required>
+              <mat-option *ngFor="let entryType of entryTypeList | async" [value]="entryType.id">
+                {{ entryType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('entryTypeId').hasError('required')">
+              Debe seleccionar una transaccion de la lista
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" style="padding-top: 15px">
+        <div fxFlex>
+          <mat-form-field class="full-width">
+            <textarea type="text" placeholder="Observaciones" formControlName="observation" matInput
+                      maxlength="500" [required]="!form.get('meetsConditions').value"></textarea>
+            <mat-error
+              *ngIf="form.get('observation').hasError('required')">
+              Debe ingresar una observación
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<button mat-fab class="fab-button-save"
+        color="primary" fxHide fxShow.gt-sm matTooltip="Guardar cambios" type="submit" form="mainForm">
+  <mat-icon fontIcon="fa-save" class="fa-mat"></mat-icon>
+</button>

@@ -1,0 +1,125 @@
+<mat-toolbar>
+  <button mat-icon-button routerLink="../../">
+    <mat-icon fontIcon="fa-arrow-left" class="fa-lg"></mat-icon>
+  </button>
+  <h3>Registrar salida</h3>
+  <span fxFlex></span>
+  <button mat-raised-button type="submit" form="theForm" color="primary" fxHide.gt-sm matTooltip="Registrar la salida"
+          *ngIf="allowedToSave && existsLogbook">
+    <mat-icon fontIcon="fa-send-o" class="fa-mat"></mat-icon>
+  </button>
+</mat-toolbar>
+<div fxLayout="column" *ngIf="allowedToSave && existsLogbook">
+  <div fxFlex class="top-margin">
+    <div fxLayout="row">
+      <div fxFlex="90" fxFlex.gt-sm="80" fxFlexOffset="5" fxFlexOffset.gt-sm="10">
+        <form [formGroup]="form" novalidate (ngSubmit)="submitForm()" (keydown.enter)="$event.preventDefault()"
+              id="theForm">
+          <div fxLayout="column" fxLayoutGap="20px">
+            <div fxFlex>
+              <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="20px">
+                <div fxFlex fxFlex.gt-sm="50">
+                  <mat-form-field class="full-width">
+                    <input matInput [matDatepicker]="picker" placeholder="Fecha" formControlName="outputDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker [touchUi]="!isDesktopBreakpoint"></mat-datepicker>
+                    <mat-error *ngIf="form.controls.outputDate.hasError('required')">
+                      Debe ingresar una fecha valida
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div fxFlex fxFlex.gt-sm="50">
+                  <div fxLayout="row" fxLayoutGap="20px">
+                    <div fxFlex="50">
+                      <mat-form-field class="full-width">
+                        <mat-select placeholder="Hora" formControlName="outputHour" required>
+                          <mat-option *ngFor="let hour of hours" [value]="hour">
+                            {{ hour | leadingZeros:2 }}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.controls.outputHour.hasError('required')">
+                          Debe seleccionar una hora valida
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="50">
+                      <mat-form-field class="full-width">
+                        <mat-select placeholder="Minuto" formControlName="outputMinute" required>
+                          <mat-option *ngFor="let minute of minutes" [value]="minute">
+                            {{ minute | leadingZeros:2 }}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.controls.outputMinute.hasError('required')">
+                          Debe seleccionar una hora valida
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div fxFlex>
+              <mat-form-field class="full-width">
+                <mat-select placeholder="Motivo de salida" formControlName="outputReason" required>
+                  <mat-option *ngFor="let type of outputReasonTypeList | async" [value]="type.id">
+                    {{ type.value }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.outputReason.hasError('required')">
+                  Debe seleccionar un motivo de salida
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex>
+              <mat-form-field class="full-width">
+            <textarea type="text" placeholder="Observaciones" formControlName="observation" matInput
+                      maxlength="500"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <button mat-fab class="fab-button-send" color="primary" type="submit" fxHide fxShow.gt-sm
+                  matTooltip="Registrar la salida">
+            <mat-icon fontIcon="fa-send-o" class="fa-mat"></mat-icon>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div fxFlex class="top-margin">
+    <div fxLayout="row" fxLayoutAlign="center">
+      <div fxFlex="90" fxFlex.gt-sm="80">
+        <mat-card>
+          <b>NOMBRE:</b> {{logbook.name}} <br/>
+          <b>ENTRADA</b>: {{logbook.inputDate | date:'yyyy-MMM-dd, HH:mm:ss'}}<br/>
+          <b>MOTIVO DE INGRESO</b>: {{logbook.inputReason.value}}<br/>
+          <b>VEHICULO</b>: {{logbook.vehicleType.value}}
+          <ng-container *ngIf="logbook.vehicleType.id != '0'">
+            , <b>PLACA</b>: {{logbook.vehiclePlate}}, <b>COLOR</b>: {{logbook.vehicleColor.value}}
+          </ng-container>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="existsLogbook; then existsLogbookTmpl else notExistsLogbookTmpl">
+</ng-container>
+<ng-template #existsLogbookTmpl>
+  <div fxLayout="row" fxLayoutAlign="center" class="top-margin" *ngIf="!allowedToSave">
+    <div fxFlex="90" fxFlex.gt-sm="80">
+      <mat-card>
+        El registro #{{id}} ({{logbook?.name}}) ya registró su salida
+      </mat-card>
+    </div>
+  </div>
+</ng-template>
+<ng-template #notExistsLogbookTmpl>
+  <div fxLayout="row" fxLayoutAlign="center" class="top-margin">
+    <div fxFlex="90" fxFlex.gt-sm="80">
+      <mat-card>
+        El registro #{{id}} no existe
+      </mat-card>
+    </div>
+  </div>
+</ng-template>
+
+

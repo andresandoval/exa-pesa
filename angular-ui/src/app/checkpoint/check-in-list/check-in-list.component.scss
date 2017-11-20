@@ -1,0 +1,9 @@
+@import "../../../styles/mixins";
+
+:host {
+
+  .plus-fab-button {
+    @include fixed-fab-button();
+  }
+
+}

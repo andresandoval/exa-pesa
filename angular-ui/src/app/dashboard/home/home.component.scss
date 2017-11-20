@@ -1,0 +1,13 @@
+$background-heigth: 500px;
+
+:host{
+
+  .logo-container{
+    background-image: url(../../../assets/images/logo.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: $background-heigth;
+    background-size: auto $background-heigth;
+  }
+
+}
