@@ -42,6 +42,11 @@ export class DashboardService {
 
   ping(): Observable<boolean> {
     return Observable.create(observer => {
+      if (!this.tokenService.existsAuthToken()) {
+        observer.next(false);
+        observer.complete();
+        return;
+      }
       this.httpService.get(URL_PING).subscribe(result => {
         observer.next(true);
       }, (error: Error) => {

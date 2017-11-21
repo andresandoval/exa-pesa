@@ -7,4 +7,4 @@ export const environment = {
   production: false
 };
 
-export const SERVER_URL:string = "{rest_api_url}";
+export const SERVER_URL:string = "http://localhost:8080/api";

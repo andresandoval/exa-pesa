@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/exa-pesa.iml" filepath="$PROJECT_DIR$/exa-pesa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/angular-ui/angular-ui.iml" filepath="$PROJECT_DIR$/angular-ui/angular-ui.iml" group="exa-pesa" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/exa-pesa.iml" filepath="$PROJECT_DIR$/.idea/modules/exa-pesa.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/exa-pesa_main.iml" filepath="$PROJECT_DIR$/.idea/modules/exa-pesa_main.iml" group="exa-pesa" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/exa-pesa_test.iml" filepath="$PROJECT_DIR$/.idea/modules/exa-pesa_test.iml" group="exa-pesa" />
     </modules>

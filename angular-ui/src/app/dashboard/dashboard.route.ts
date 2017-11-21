@@ -7,7 +7,8 @@ import {HomeComponent} from "./home/home.component";
 const routes : Routes = [
   {path: '', component: MainComponent, children: [
     {path: '', component: HomeComponent},
-    {path: 'checkpoint', loadChildren: '../checkpoint/checkpoint.module#CheckpointModule'}
+    {path: 'checkpoint', loadChildren: '../checkpoint/checkpoint.module#CheckpointModule'},
+    {path: '**', redirectTo: ''}
   ]},
   {path: 'login', component: LoginComponent}
 ];

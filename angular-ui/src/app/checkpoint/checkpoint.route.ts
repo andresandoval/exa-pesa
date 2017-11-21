@@ -13,13 +13,16 @@ const routes: Routes = [
   {path: 'logbook/new', component: LogbookDetailComponent},
   {path: 'logbook/edit', component: LogbookDetailComponent},
   {path: 'logbook/out/:id', component: LogbookOutComponent},
-  {path: 'check-in', component: CheckInListComponent, children: [
+  {
+    path: 'check-in', component: CheckInListComponent, children: [
     {path: '', pathMatch: 'full', redirectTo: 'input'},
     {path: 'input', component: CheckInInputListComponent},
     {path: 'output', component: CheckInOutputListComponent}
-  ]},
+  ]
+  },
   {path: 'check-in/input/new', component: CheckInDetailComponent},
-  {path: 'check-in/input/edit/:id', component: CheckInDetailComponent}
+  {path: 'check-in/input/edit/:id', component: CheckInDetailComponent},
+  {path: '**', redirectTo: ''}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

@@ -18,16 +18,21 @@ configure(allprojects) {
     apply plugin: "propdeps"
 }
 
+//TASKS
+task copyAngularDist(type: Copy) {
+    from "angular-ui/dist"
+    include("**")
+    into "$buildDir/resources/main/static"
+}
+
 //JAVA PLUGIN
 jar {
     baseName = "exa-pesa-core"
     version = "1.0.0"
-    from("angular-ui"){
-        include "dist/**"
-    }
 }
 
 processResources {
+    dependsOn copyAngularDist
     if (!project.hasProperty('no-expand')) {
         expand(project.properties)
     }
