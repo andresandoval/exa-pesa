@@ -2,7 +2,7 @@
   <button mat-icon-button routerLink="../">
     <mat-icon fontIcon="fa-arrow-left" class="fa-lg"></mat-icon>
   </button>
-  <h3>Nueva entrada</h3>
+  <h3>Nueva salida</h3>
   <span fxFlex></span>
   <button mat-raised-button *ngIf="!isDesktopBreakpoint" type="submit" form="theForm" color="primary">
     <mat-icon fontIcon="fa-floppy-o" class="fa-mat"></mat-icon>
@@ -10,14 +10,15 @@
 </mat-toolbar>
 <div fxLayout="row">
   <div fxFlex="90" fxFlex.gt-sm="80" fxFlexOffset="5" fxFlexOffset.gt-sm="10">
-    <form [formGroup]="form" novalidate (ngSubmit)="submitForm()" (keydown.enter)="$event.preventDefault()" id="theForm">
+    <form [formGroup]="form" novalidate (ngSubmit)="submitForm()" (keydown.enter)="$event.preventDefault()"
+          id="theForm">
       <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
         <div fxFlex fxFlex.gt-sm="50">
           <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="picker" placeholder="Fecha" formControlName="inputDate" required>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha" formControlName="outputDate" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker [touchUi]="!isDesktopBreakpoint"></mat-datepicker>
-            <mat-error *ngIf="form.controls.inputDate.hasError('required')">
+            <mat-error *ngIf="form.controls.outputDate.hasError('required')">
               Debe ingresar una fecha valida
             </mat-error>
           </mat-form-field>
@@ -25,34 +26,34 @@
         <div fxFlex fxFlex.gt-sm="50">
           <div fxLayout="row" fxLayoutGap="20px">
             <div fxFlex="50">
-            <mat-form-field class="full-width">
-              <mat-select placeholder="Hora" formControlName="inputHour" required>
-                <mat-option *ngFor="let hour of hours" [value]="hour">
-                  {{ hour | leadingZeros:2 }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="form.controls.inputHour.hasError('required')">
-                Debe seleccionar una hora valida
-              </mat-error>
-            </mat-form-field>
-          </div>
+              <mat-form-field class="full-width">
+                <mat-select placeholder="Hora" formControlName="outputHour" required>
+                  <mat-option *ngFor="let hour of hours" [value]="hour">
+                    {{ hour | leadingZeros:2 }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.outputHour.hasError('required')">
+                  Debe seleccionar una hora valida
+                </mat-error>
+              </mat-form-field>
+            </div>
             <div fxFlex="50">
-            <mat-form-field class="full-width">
-              <mat-select placeholder="Minuto" formControlName="inputMinute" required>
-                <mat-option *ngFor="let minute of minutes" [value]="minute">
-                  {{ minute | leadingZeros:2 }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="form.controls.inputMinute.hasError('required')">
-                Debe seleccionar una hora valida
-              </mat-error>
-            </mat-form-field>
-          </div>
+              <mat-form-field class="full-width">
+                <mat-select placeholder="Minuto" formControlName="outputMinute" required>
+                  <mat-option *ngFor="let minute of minutes" [value]="minute">
+                    {{ minute | leadingZeros:2 }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.outputMinute.hasError('required')">
+                  Debe seleccionar una hora valida
+                </mat-error>
+              </mat-form-field>
+            </div>
           </div>
         </div>
       </div>
       <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
-        <div fxFlex fxFlex.gt-sm="40">
+        <div fxFlex fxFlex.gt-sm="50">
           <mat-form-field class="full-width">
             <input type="text" placeholder="Nombres y Apellidos" formControlName="name" matInput
                    [matAutocomplete]="auto" required maxlength="100" class="upper-case">
@@ -69,27 +70,15 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex fxFlex.gt-sm="30">
+        <div fxFlex fxFlex.gt-sm="40">
           <mat-form-field class="full-width">
-            <mat-select placeholder="Motivo de ingreso" formControlName="inputReason" required>
-              <mat-option *ngFor="let type of inputReasonTypeList | async" [value]="type.id">
+            <mat-select placeholder="Motivo de salida" formControlName="outputReason" required>
+              <mat-option *ngFor="let type of outputReasonTypeList | async" [value]="type.id">
                 {{ type.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="form.controls.inputReason.hasError('required')">
-              Debe seleccionar un motivo de ingreso
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxFlex fxFlex.gt-sm="30">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="Clase de material" formControlName="materialType" required>
-              <mat-option *ngFor="let materialType of materialTypeList | async" [value]="materialType.id">
-                {{ materialType.value }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="form.controls.materialType.hasError('required')">
-              Debe seleccionar una clase de material
+            <mat-error *ngIf="form.controls.outputReason.hasError('required')">
+              Debe seleccionar un motivo de salida
             </mat-error>
           </mat-form-field>
         </div>

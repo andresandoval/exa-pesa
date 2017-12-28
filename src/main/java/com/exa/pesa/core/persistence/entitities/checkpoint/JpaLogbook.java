@@ -26,7 +26,7 @@ public class JpaLogbook {
     @Column(name = "id_local", nullable = false)
     private Integer siteId;
 
-    @Column(name = "fechaingreso", nullable = false)
+    @Column(name = "fechaingreso", nullable = true)
     private LocalDateTime inputDate;
 
     @Column(name = "fechasalida", nullable = true)
@@ -55,14 +55,14 @@ public class JpaLogbook {
     @JoinColumn(name = "area")
     private JpaLogbookParameter area;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "clasematerial")
     private JpaLogbookParameter materialType;
 
     @Column(name = "observacion", nullable = true)
     private String observation;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "motivoentrada")
     private JpaLogbookParameter inputReason;
 
@@ -124,6 +124,7 @@ public class JpaLogbook {
     }
 
     public JpaLogbook(Logbook model) {
+        this.id= model.getId();
         this.siteId = model.getSiteId();
         this.inputDate = model.getInputDate();
         this.outputDate = model.getOutputDate();
@@ -137,18 +138,29 @@ public class JpaLogbook {
             this.contactPerson = new JpaPerson(model.getContactPerson());
         }
         this.area = new JpaLogbookParameter(model.getArea());
-        this.materialType = new JpaLogbookParameter(model.getMaterialType());
+        if(Objects.nonNull(model.getMaterialType())){
+            this.materialType = new JpaLogbookParameter(model.getMaterialType());
+        }
         this.observation = model.getObservation();
-        this.inputReason = new JpaLogbookParameter(model.getInputReason());
+        if (Objects.nonNull(model.getInputReason())) {
+            this.inputReason = new JpaLogbookParameter(model.getInputReason());
+        }
         if (Objects.nonNull(model.getOutputReason())) {
             this.outputReason = new JpaLogbookParameter(model.getOutputReason());
         }
-        this.creationDate = LocalDateTime.now();
-        this.modificationUser = null;
-        this.modificationDate = null;
-        this.voided = false;
-        this.voidUser = null;
-        this.voidDate = null;
+        if(Objects.nonNull(model.getCreationDate())) {
+            this.creationDate = model.getCreationDate();
+            this.creationUser = model.getCreationUser();
+        }
+        if(Objects.nonNull(model.getModificationDate())){
+            this.modificationDate = model.getModificationDate();
+            this.modificationUser = model.getModificationUser();
+        }
+        this.voided = Objects.isNull(model.getVoided()) ? false : model.getVoided();
+        if(this.voided){
+            this.voidDate = model.getVoidDate();
+            this.voidUser = model.getVoidUser();
+        }
     }
 
     public Integer getId() {

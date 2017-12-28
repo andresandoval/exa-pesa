@@ -1,24 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {CheckpointService} from "../checkpoint.service";
-import {HOURS, MINUTES} from "../../core/exa-utils/exa-constants";
+import {CheckpointService} from "../../checkpoint.service";
+import {HOURS, MINUTES} from "../../../core/exa-utils/exa-constants";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Observable} from "rxjs/Observable";
-import {Person} from "../../model/parties/person";
-import {Parameter} from "../../model/business/parameter";
-import {ViewportStateService} from "../../core/exa-services/exa-viewport/viewport-state.service";
-import {ViewportBreakpoint} from "../../model/core/viewport-breakpoint.enum";
-import {Vehicle} from "../../model/business/vehicle";
-import {LogbookCreation} from "../../model/logbook/logbook-creation";
-import {ValidateOptionalAutoCompleteOption} from "../../core/exa-utils/exa-validators";
-import {dateToString} from "../../core/exa-utils/exa-converters";
+import {Person} from "../../../model/parties/person";
+import {Parameter} from "../../../model/business/parameter";
+import {ViewportStateService} from "../../../core/exa-services/exa-viewport/viewport-state.service";
+import {ViewportBreakpoint} from "../../../model/core/viewport-breakpoint.enum";
+import {Vehicle} from "../../../model/business/vehicle";
+import {ValidateOptionalAutoCompleteOption} from "../../../core/exa-utils/exa-validators";
+import {dateToString} from "../../../core/exa-utils/exa-converters";
 import {ActivatedRoute, Router} from "@angular/router";
+import {LogbookOutputCreation} from "../../../model/logbook/logbook-output-creation";
 
 @Component({
-  selector: 'exp-logbook-detail',
-  templateUrl: './logbook-detail.component.html',
-  styleUrls: ['./logbook-detail.component.scss']
+  selector: 'exp-logbook-output-new',
+  templateUrl: './logbook-output-new.component.html',
+  styleUrls: ['./logbook-output-new.component.scss']
 })
-export class LogbookDetailComponent implements OnInit {
+export class LogbookOutputNewComponent implements OnInit {
 
   constructor(private checkPointService: CheckpointService, private vpService: ViewportStateService,
               private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute) {
@@ -30,8 +30,7 @@ export class LogbookDetailComponent implements OnInit {
   //lists
   hours: number[] = HOURS;
   minutes: number[] = MINUTES;
-  inputReasonTypeList: Observable<Parameter[]>;
-  materialTypeList: Observable<Parameter[]>;
+  outputReasonTypeList: Observable<Parameter[]>;
   vehicleTypeList: Observable<Parameter[]>;
   vehicleColorList: Observable<Parameter[]>;
   areaList: Observable<Parameter[]>;
@@ -51,15 +50,14 @@ export class LogbookDetailComponent implements OnInit {
   }
 
   createForm(): void {
-    let today = new Date();
+    const today = new Date();
 
     this.form = this.formBuilder.group({
-      inputDate: [today, [Validators.required]],
-      inputHour: [today.getHours(), [Validators.required]],
-      inputMinute: [today.getMinutes(), [Validators.required]],
+      outputDate: [today, [Validators.required]],
+      outputHour: [today.getHours(), [Validators.required]],
+      outputMinute: [today.getMinutes(), [Validators.required]],
       name: [null, [Validators.required, Validators.maxLength(100), Validators.minLength(5)]],
-      inputReason: [null, [Validators.required]],
-      materialType: ["0", [Validators.required]],
+      outputReason: [null, [Validators.required]],
       vehicleType: ["0", [Validators.required]],
       vehiclePlate: [null],
       vehicleColor: [null],
@@ -79,8 +77,7 @@ export class LogbookDetailComponent implements OnInit {
   }
 
   loadLists(): void {
-    this.inputReasonTypeList = this.checkPointService.getInputTypes();
-    this.materialTypeList = this.checkPointService.getMaterialTypes();
+    this.outputReasonTypeList = this.checkPointService.getOutputTypes();
     this.vehicleTypeList = this.checkPointService.getVehicleTypes();
     this.vehicleColorList = this.checkPointService.getColors();
     this.areaList = this.checkPointService.getAreas();
@@ -116,18 +113,17 @@ export class LogbookDetailComponent implements OnInit {
     });
   }
 
-  processForm(): LogbookCreation {
+  processForm(): LogbookOutputCreation {
     const formValue = this.form.value;
-    let formInputDate: Date = formValue.inputDate;
-    let inDate: Date = new Date(formInputDate.getFullYear(), formInputDate.getMonth(), formInputDate.getDate(),
-      formValue.inputHour, formValue.inputMinute, 0, 0);
+    let formOutputDate: Date = formValue.outputDate;
+    let outputDate: Date = new Date(formOutputDate.getFullYear(), formOutputDate.getMonth(), formOutputDate.getDate(),
+      formValue.outputHour, formValue.outputMinute, 0, 0);
     let name: string = (typeof formValue.name != "string") ? formValue.name.name : formValue.name;
 
-    const logbook: LogbookCreation = {
-      inputDate: dateToString(inDate),
+    const logbook: LogbookOutputCreation = {
+      outputDate: dateToString(outputDate),
       name: name.toUpperCase(),
-      inputReasonId: formValue.inputReason,
-      materialTypeId: formValue.materialType,
+      outputReasonId: formValue.outputReason,
       vehicleTypeId: formValue.vehicleType,
       areaId: formValue.area,
       observation: formValue.observation
@@ -147,8 +143,8 @@ export class LogbookDetailComponent implements OnInit {
   submitForm() {
     if (this.form.invalid)
       return;
-    const logbook: LogbookCreation = this.processForm();
-    this.checkPointService.saveLogbook(logbook).subscribe(() => {
+    const logbook: LogbookOutputCreation = this.processForm();
+    this.checkPointService.saveOutputLogbook(logbook).subscribe(() => {
       this.router.navigate(["../"], {relativeTo: this.activatedRoute});
     });
   }

@@ -21,9 +21,10 @@ public interface RestEndpoints {
     public static final String CHECK_IN_OUT = "/api/checkpoint/check-in/input/{id}/out";
 
     public static final String LOGBOOK_LIST = "/api/checkpoint/logbook";
-    public static final String LOGBOOK_SAVE = "/api/checkpoint/logbook";
+    public static final String LOGBOOK_INPUT_SAVE = "/api/checkpoint/logbook/input";
+    public static final String LOGBOOK_OUTPUT_SAVE = "/api/checkpoint/logbook/output";
     public static final String LOGBOOK_SINGLE = "/api/checkpoint/logbook/{id}";
-    public static final String LOGBOOK_OUT = "/api/checkpoint/logbook/{id}/out";
+    public static final String LOGBOOK_OUTPUT_REGISTER = "/api/checkpoint/logbook/output/{id}";
 
     public static final String PARAMETERS_INPUT_TYPES = "/api/parameters/input-types";
     public static final String PARAMETERS_OUTPUT_TYPES = "/api/parameters/output-types";

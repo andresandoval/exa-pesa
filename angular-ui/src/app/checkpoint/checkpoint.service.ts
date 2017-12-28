@@ -10,9 +10,10 @@ import {
   URL_CHECK_IN_SAVE,
   URL_CHECK_IN_SINGLE,
   URL_CHECK_IN_UPDATE,
+  URL_LOGBOOK_INPUT_SAVE,
   URL_LOGBOOK_LIST,
-  URL_LOGBOOK_OUT,
-  URL_LOGBOOK_SAVE,
+  URL_LOGBOOK_OUTPUT_REGISTER,
+  URL_LOGBOOK_OUTPUT_SAVE,
   URL_LOGBOOK_SINGLE,
   URL_PARAMETER_AREAS,
   URL_PARAMETER_COLORS,
@@ -29,7 +30,7 @@ import "rxjs/add/operator/catch";
 import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef, SimpleSnackBar} from "@angular/material";
 import {Vehicle} from "../model/business/vehicle";
 import {ErrorObservable} from "rxjs/observable/ErrorObservable";
-import {LogbookCreation} from "../model/logbook/logbook-creation";
+import {LogbookInputCreation} from "../model/logbook/logbook-input-creation";
 import {MessageView} from "../model/core/message-view";
 import {ExaDialogService} from "../core/exa-services/exa-dialog/exa-dialog.service";
 import {ConfirmationResult} from "../model/core/dialog-result";
@@ -43,6 +44,7 @@ import {EntryType} from "../model/check-in/entry-type";
 import {CheckInCreation} from "../model/check-in/check-in-creation";
 import {CheckInUpdate} from "../model/check-in/check-in-update";
 import {ExaSpinnerService} from "../core/exa-services/exa-dialog/exa-spinner.service";
+import {LogbookOutputCreation} from "../model/logbook/logbook-output-creation";
 
 
 @Injectable()
@@ -138,7 +140,7 @@ export class CheckpointService {
       });
   }
 
-  saveLogbook(logbook: LogbookCreation): Observable<any> {
+  private saveLogbook(logbook: LogbookInputCreation | LogbookOutputCreation, url: string): Observable<any> {
     return Observable.create(observer => {
       this.dialogService.confirm().subscribe((result: ConfirmationResult) => {
         if (result != ConfirmationResult.YES) {
@@ -147,7 +149,7 @@ export class CheckpointService {
         }
         this.spinnerService.reveal();
         let savingMsg = this.showSnackBar("Guardando...");
-        this.httpService.post<MessageView>(URL_LOGBOOK_SAVE, logbook).subscribe((msg) => {
+        this.httpService.post<MessageView>(url, logbook).subscribe((msg) => {
           this.showSnackBar(msg.message);
           observer.next();
         }, (error: Error) => {
@@ -162,6 +164,14 @@ export class CheckpointService {
     });
   }
 
+  saveInputLogbook(logbook: LogbookInputCreation): Observable<any> {
+    return this.saveLogbook(logbook, URL_LOGBOOK_INPUT_SAVE);
+  }
+
+  saveOutputLogbook(logbook: LogbookOutputCreation): Observable<any> {
+    return this.saveLogbook(logbook, URL_LOGBOOK_OUTPUT_SAVE);
+  }
+
   getLogbookListByFilter(pageRequest: PageRequest, filter: string): Observable<Page<Logbook>> {
     const parameters: Map<string, string> = new Map();
     parameters.set("page", pageRequest.page.toString());
@@ -174,7 +184,7 @@ export class CheckpointService {
     });
   };
 
-  registerLogbookOut(id: number, logbook: LogbookUpdateOut): Observable<any> {
+  registerLogbookOutput(id: number, logbook: LogbookUpdateOut): Observable<any> {
     return Observable.create(observer => {
       this.dialogService.confirm().subscribe((result: ConfirmationResult) => {
         if (result != ConfirmationResult.YES) {
@@ -186,7 +196,7 @@ export class CheckpointService {
         let savingMsg = this.showSnackBar("Guardando...");
         const parameters: Map<string, string> = new Map();
         parameters.set("id", id.toString());
-        const url: string = UrlHelper.mapParameters(URL_LOGBOOK_OUT, parameters);
+        const url: string = UrlHelper.mapParameters(URL_LOGBOOK_OUTPUT_REGISTER, parameters);
 
         this.httpService.patch<MessageView>(url, logbook).subscribe((msg) => {
           this.showSnackBar(msg.message);

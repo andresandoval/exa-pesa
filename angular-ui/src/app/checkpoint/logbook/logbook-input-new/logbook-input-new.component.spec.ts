@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LogbookDetailComponent } from './logbook-detail.component';
+import { LogbookInputNewComponent } from './logbook-input-new.component';
 
-describe('LogbookDetailComponent', () => {
-  let component: LogbookDetailComponent;
-  let fixture: ComponentFixture<LogbookDetailComponent>;
+describe('LogbookNewInComponent', () => {
+  let component: LogbookInputNewComponent;
+  let fixture: ComponentFixture<LogbookInputNewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogbookDetailComponent ]
+      declarations: [ LogbookInputNewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LogbookDetailComponent);
+    fixture = TestBed.createComponent(LogbookInputNewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

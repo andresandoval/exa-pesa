@@ -15,8 +15,9 @@ import com.exa.pesa.core.util.RestEndpoints;
 import com.exa.pesa.core.util.TimeUtils;
 import com.exa.pesa.core.views.MessageView;
 import com.exa.pesa.core.views.PageWrapperView;
-import com.exa.pesa.core.views.checkpoint.LogbookCreationView;
+import com.exa.pesa.core.views.checkpoint.LogbookInputCreationView;
 import com.exa.pesa.core.views.checkpoint.LogbookOutView;
+import com.exa.pesa.core.views.checkpoint.LogbookOutputCreationView;
 import com.exa.pesa.core.views.checkpoint.LogbookView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -74,8 +75,8 @@ public class LogbookController {
 
     }
 
-    @PostMapping(value = RestEndpoints.LOGBOOK_SAVE)
-    private ResponseEntity<MessageView> saveLogbook(@RequestBody LogbookCreationView creationView) throws
+    @PostMapping(value = RestEndpoints.LOGBOOK_INPUT_SAVE)
+    private ResponseEntity<MessageView> saveInputLogbook(@RequestBody LogbookInputCreationView creationView) throws
             BusinessException {
         Asserts.nonNull(creationView, "Error interno al procesar la consulta");
 
@@ -125,7 +126,54 @@ public class LogbookController {
         return new ResponseEntity<MessageView>(new MessageView("Bitacora creada con exito"), HttpStatus.CREATED);
     }
 
-    @PatchMapping(value = RestEndpoints.LOGBOOK_OUT)
+    @PostMapping(value = RestEndpoints.LOGBOOK_OUTPUT_SAVE)
+    private ResponseEntity<MessageView> saveOutputLogbook(@RequestBody LogbookOutputCreationView creationView) throws
+            BusinessException {
+        Asserts.nonNull(creationView, "Error interno al procesar la consulta");
+
+        Logbook model = new Logbook();
+        model.setSiteId(this.appConfig.getSiteId());
+        Asserts.nonNull(creationView.getOutputDate(), "La fecha de salida no es válida");
+        model.setOutputDate(TimeUtils.isoStringToLocalDateTime(creationView.getOutputDate()));
+        model.setName(creationView.getName());
+
+        Parameter outputReason = parameterService.getParameterById(creationView.getOutputReasonId(), parameterConfig
+                .getOutputTypeGroup());
+        Asserts.nonNull(outputReason, "El motivo de salida seleccionado no existe");
+        model.setOutputReason(outputReason);
+
+        Parameter vehicleType = parameterService.getParameterById(creationView.getVehicleTypeId(), parameterConfig
+                .getVehicleTypeGroup());
+        Asserts.nonNull(vehicleType, "El tipo de vehiclo seleccionado no existe");
+        model.setVehicleType(vehicleType);
+
+        if (!vehicleType.getId().equals("0")) {
+            model.setVehiclePlate(creationView.getVehiclePlate());
+
+            Parameter vehicleColor = parameterService.getParameterById(creationView.getVehicleColorId(), parameterConfig
+                    .getColorGroup());
+            Asserts.nonNull(vehicleColor, "El color seleccionado no existe");
+            model.setVehicleColor(vehicleColor);
+        }
+        if (Objects.nonNull(creationView.getContactPersonId())) {
+            Person contactPerson = this.partyService.getPersonById(creationView.getContactPersonId());
+            Asserts.nonNull(contactPerson, "La persona de contacto seleccionada no existe");
+            model.setContactPerson(contactPerson);
+        }
+
+        Parameter area = parameterService.getParameterById(creationView.getAreaId(), parameterConfig
+                .getAreaGroup());
+        Asserts.nonNull(vehicleType, "El area seleccionada no existe");
+        model.setArea(area);
+        model.setObservation(creationView.getObservation());
+        Logbook newModel = this.logbookService.save(model);
+        if (Objects.isNull(newModel))
+            return new ResponseEntity<MessageView>(new MessageView("No se pudo crear la bitacora"), HttpStatus
+                    .NOT_FOUND);
+        return new ResponseEntity<MessageView>(new MessageView("Bitacora creada con exito"), HttpStatus.CREATED);
+    }
+
+    @PatchMapping(value = RestEndpoints.LOGBOOK_OUTPUT_REGISTER)
     private ResponseEntity<MessageView> registerLogbookOut(@PathVariable(required = true) Integer id, @RequestBody
             LogbookOutView
             outView) throws

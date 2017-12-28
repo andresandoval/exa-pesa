@@ -4,7 +4,7 @@
       <h3 fxHide fxShow.gt-sm>Bitacora de entrada y salida</h3>
       <h3 fxHide.gt-sm>Bitacora de E/S</h3>
       <span fxFlex></span>
-      <button mat-raised-button routerLink="new" color="accent" fxHide.gt-sm matTooltip="Agregar nueva entrada">
+      <button mat-raised-button (click)="openDetail()" color="accent" fxHide.gt-sm matTooltip="Agregar registro">
         <mat-icon fontIcon="fa-plus" class="fa-mat"></mat-icon>
       </button>
     </mat-toolbar-row>
@@ -31,21 +31,40 @@
         <ng-container *ngFor="let logbook of logbList">
           <mat-list-item>
             <button matListAvatar mat-icon-button [disabled]="!!logbook['outputDate']" matTooltip="Registrar salida"
-                    [routerLink]="['out', logbook.id]">
+                    [routerLink]="['output', logbook.id]">
               <mat-icon fontIcon="fa-check" class="avatar-font-icon icon-green" *ngIf="logbook['outputDate']">
               </mat-icon>
               <mat-icon fontIcon="fa-sign-out" class="avatar-font-icon icon-red" *ngIf="!logbook['outputDate']">
               </mat-icon>
             </button>
-            <h4 mat-line innerHtml="{{logbook.name | highlight:filter}}"></h4>
-            <div mat-line>
-              <span>Hora de entrada:</span> {{logbook.inputDate | date:'yyyy-MMM-dd, HH:mm:ss'}}
+            <h4 mat-line>
+              <span innerHtml="{{logbook.name | highlight:filter}}"></span>
+              <span class="chip">
+                <mat-icon *ngIf="logbook['inputDate']" fontIcon="fa-arrow-down" class="input-arrow" matTooltip="Ingreso registrado"></mat-icon>
+                <mat-icon *ngIf="logbook['outputDate']" fontIcon="fa-arrow-up" class="output-arrow" matTooltip="Salida registrada"></mat-icon>
+              </span>
+            </h4>
+            <div mat-line *ngIf="logbook['inputDate']; else noInputDate">
+              <span>Hora de ingreso:</span> {{logbook.inputDate | date:'yyyy-MMM-dd, HH:mm:ss'}}
             </div>
+            <ng-template #noInputDate>
+              <div mat-line>
+                <span>Hora de ingreso:</span> S/N
+              </div>
+            </ng-template>
+            <div mat-line *ngIf="logbook['inputReason']; else noInputReason">
+              <span>Motivo de ingreso:</span> {{logbook.inputReason.value}}
+            </div>
+            <ng-template #noInputReason>
+              <div mat-line>
+                <span>Motivo de ingreso:</span> S/N
+              </div>
+            </ng-template>
             <div mat-line *ngIf="logbook['outputDate']">
               <span>Hora de salida:</span> {{logbook.outputDate | date:'yyyy-MMM-dd, HH:mm:ss'}}
             </div>
-            <div mat-line>
-              <span>Motivo de ingreso:</span> {{logbook.inputReason.value}}
+            <div mat-line *ngIf="logbook['outputReason']">
+              <span>Motivo de salida:</span> {{logbook.outputReason.value}}
             </div>
             <div mat-line>
               <span>Vehiculo:</span> {{logbook.vehicleType.value}}
@@ -61,7 +80,6 @@
     <ng-template #loadingData>
       <div fxFlex="80" style="margin: 25px 0px">
         Cargando registros...
-        {{logbList | json}}
       </div>
     </ng-template>
   </div>
@@ -73,7 +91,7 @@
     </div>
   </div>
 </div>
-<button mat-fab class="plus-fab-button" routerLink="new" fxHide fxShow.gt-sm matTooltip="Agregar nueva entrada">
+<button mat-fab class="plus-fab-button" (click)="openDetail()" fxHide fxShow.gt-sm matTooltip="Agregar registro">
   <mat-icon fontIcon="fa-plus" class="fa-mat"></mat-icon>
 </button>
 

@@ -1,0 +1,27 @@
+@import "../../../../styles/mixins";
+
+:host{
+
+  .plus-fab-button{
+    @include fixed-fab-button();
+  }
+
+  .top-margin{
+    margin-top: 50px;
+  }
+
+  .input-arrow{
+    color: green;
+  }
+
+  .output-arrow{
+    color: red;
+  }
+
+  span.chip{
+    padding: 0px 3px;
+    background: #ddd;
+    border-radius: 10px;
+    text-align: center;
+  }
+}

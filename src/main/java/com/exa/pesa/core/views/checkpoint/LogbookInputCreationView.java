@@ -1,6 +1,6 @@
 package com.exa.pesa.core.views.checkpoint;
 
-public class LogbookCreationView {
+public class LogbookInputCreationView {
     private String inputDate;
     private String name;
     private String inputReasonId;
@@ -12,7 +12,7 @@ public class LogbookCreationView {
     private String areaId;
     private String observation;
 
-    public LogbookCreationView() {
+    public LogbookInputCreationView() {
         super();
     }
 

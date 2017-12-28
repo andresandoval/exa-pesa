@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ValidateOptionalAutoCompleteOption} from "../../core/exa-utils/exa-validators";
-import {Vehicle} from "../../model/business/vehicle";
+import {ValidateOptionalAutoCompleteOption} from "../../../core/exa-utils/exa-validators";
+import {Vehicle} from "../../../model/business/vehicle";
 import {Observable} from "rxjs/Observable";
-import {CheckpointService} from "../checkpoint.service";
-import {EntryType} from "../../model/check-in/entry-type";
-import {CheckInCreation} from "../../model/check-in/check-in-creation";
+import {CheckpointService} from "../../checkpoint.service";
+import {EntryType} from "../../../model/check-in/entry-type";
+import {CheckInCreation} from "../../../model/check-in/check-in-creation";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {CheckIn} from "../../model/check-in/check-in";
-import {CheckInUpdate} from "../../model/check-in/check-in-update";
+import {CheckIn} from "../../../model/check-in/check-in";
+import {CheckInUpdate} from "../../../model/check-in/check-in-update";
 
 @Component({
   selector: 'exp-check-in-detail',

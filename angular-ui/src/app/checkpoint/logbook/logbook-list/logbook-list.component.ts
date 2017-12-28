@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {LogbookCreation} from "../../model/logbook/logbook-creation";
-import {CheckpointService} from "../checkpoint.service";
-import {PageRequest} from "../../model/core/page-request";
-import {Page} from "../../model/core/page";
-import {PageEvent} from "@angular/material";
-import {Logbook} from "../../model/logbook/logbook";
-import {DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS} from "../../core/exa-utils/exa-constants";
+import {CheckpointService} from "../../checkpoint.service";
+import {PageRequest} from "../../../model/core/page-request";
+import {Page} from "../../../model/core/page";
+import {MatDialog, PageEvent} from "@angular/material";
+import {Logbook} from "../../../model/logbook/logbook";
+import {DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS} from "../../../core/exa-utils/exa-constants";
+import {LogbookSelectorComponent} from "../logbook-selector/logbook-selector.component";
 
 @Component({
   selector: 'exp-logbook-list',
@@ -15,7 +15,7 @@ import {DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS} from "../../core/exa-utils/exa-con
 })
 export class LogbookListComponent implements OnInit {
 
-  constructor(private checkpointService: CheckpointService) {
+  constructor(private checkpointService: CheckpointService, private dialogService: MatDialog) {
   }
 
   pageSizeOptions: number[] = PAGE_SIZE_OPTIONS;
@@ -48,8 +48,8 @@ export class LogbookListComponent implements OnInit {
     this.loadList();
   }
 
-  registerOutput(id: number): void {
-    alert(id);
+  openDetail(): void {
+    const dialogRef = this.dialogService.open(LogbookSelectorComponent);
   }
 
   ngOnInit() {

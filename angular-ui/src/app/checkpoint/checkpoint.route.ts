@@ -1,24 +1,25 @@
 import {RouterModule, Routes} from "@angular/router";
 import {ModuleWithProviders} from "@angular/core";
-import {LogbookListComponent} from "./logbook-list/logbook-list.component";
-import {LogbookDetailComponent} from "./logbook-detail/logbook-detail.component";
-import {CheckInListComponent} from "./check-in-list/check-in-list.component";
-import {CheckInDetailComponent} from "./check-in-detail/check-in-detail.component";
-import {LogbookOutComponent} from "./logbook-out/logbook-out.component";
-import {CheckInInputListComponent} from "./check-in-list/check-in-input-list/check-in-input-list.component";
-import {CheckInOutputListComponent} from "./check-in-list/check-in-output-list/check-in-output-list.component";
+import {LogbookListComponent} from "./logbook/logbook-list/logbook-list.component";
+import {LogbookInputNewComponent} from "./logbook/logbook-input-new/logbook-input-new.component";
+import {CheckInListComponent} from "./check-in/check-in-list/check-in-list.component";
+import {CheckInDetailComponent} from "./check-in/check-in-detail/check-in-detail.component";
+import {LogbookOutRegisterComponent} from "./logbook/logbook-output-register/logbook-out-register.component";
+import {CheckInInputListComponent} from "./check-in/check-in-list/check-in-input-list/check-in-input-list.component";
+import {CheckInOutputListComponent} from "./check-in/check-in-list/check-in-output-list/check-in-output-list.component";
+import {LogbookOutputNewComponent} from "./logbook/logbook-output-new/logbook-output-new.component";
 
 const routes: Routes = [
   {path: 'logbook', component: LogbookListComponent},
-  {path: 'logbook/new', component: LogbookDetailComponent},
-  {path: 'logbook/edit', component: LogbookDetailComponent},
-  {path: 'logbook/out/:id', component: LogbookOutComponent},
+  {path: 'logbook/input', component: LogbookInputNewComponent},
+  {path: 'logbook/output', component: LogbookOutputNewComponent},
+  {path: 'logbook/output/:id', component: LogbookOutRegisterComponent},
   {
     path: 'check-in', component: CheckInListComponent, children: [
-    {path: '', pathMatch: 'full', redirectTo: 'input'},
-    {path: 'input', component: CheckInInputListComponent},
-    {path: 'output', component: CheckInOutputListComponent}
-  ]
+      {path: '', pathMatch: 'full', redirectTo: 'input'},
+      {path: 'input', component: CheckInInputListComponent},
+      {path: 'output', component: CheckInOutputListComponent}
+    ]
   },
   {path: 'check-in/input/new', component: CheckInDetailComponent},
   {path: 'check-in/input/edit/:id', component: CheckInDetailComponent},

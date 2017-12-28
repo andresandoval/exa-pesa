@@ -31,6 +31,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Throwable.class)
     private ResponseEntity<MessageView> onOtherException(Throwable e){
         final MessageView messageView = new MessageView("Ocurrió un error inesperado, por favor, intentelo nuevamente");
+        e.printStackTrace();
         return new ResponseEntity<>(messageView, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

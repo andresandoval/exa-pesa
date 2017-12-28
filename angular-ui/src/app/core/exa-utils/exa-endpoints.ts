@@ -20,8 +20,9 @@ export const URL_VEHICLE_BY_PLATE_FILTER : string = SERVER_URL + "/vehicles/filt
 
 //checkpoint -> logbook
 export const URL_LOGBOOK_LIST: string = SERVER_URL + "/checkpoint/logbook?page={page}&size={size}&filter={filter}";
-export const URL_LOGBOOK_SAVE: string = SERVER_URL + "/checkpoint/logbook";
-export const URL_LOGBOOK_OUT: string = SERVER_URL + "/checkpoint/logbook/{id}/out";
+export const URL_LOGBOOK_INPUT_SAVE: string = SERVER_URL + "/checkpoint/logbook/input";
+export const URL_LOGBOOK_OUTPUT_SAVE: string = SERVER_URL + "/checkpoint/logbook/output";
+export const URL_LOGBOOK_OUTPUT_REGISTER: string = SERVER_URL + "/checkpoint/logbook/output/{id}";
 export const URL_LOGBOOK_SINGLE: string = SERVER_URL + "/checkpoint/logbook/{id}";
 
 //checkpoint -> checkin

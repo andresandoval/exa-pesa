@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CheckpointService} from "../../checkpoint.service";
+import {CheckpointService} from "../../../checkpoint.service";
 import {Observable} from "rxjs/Observable";
-import {CheckIn} from "../../../model/check-in/check-in";
+import {CheckIn} from "../../../../model/check-in/check-in";
 
 @Component({
   selector: 'exp-check-in-output-list',

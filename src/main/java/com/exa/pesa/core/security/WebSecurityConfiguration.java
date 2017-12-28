@@ -43,8 +43,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService);
     }
-/*
-    @Bean
+
+    /*@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
@@ -54,6 +54,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .allowedMethods(applicationConfig.getClientAllowedMethods());
             }
         };
-    }
-*/
+    }*/
 }

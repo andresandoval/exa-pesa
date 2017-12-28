@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LogbookOutComponent } from './logbook-out.component';
+import { LogbookOutRegisterComponent } from './logbook-out-register.component';
 
-describe('LogbookOutComponent', () => {
-  let component: LogbookOutComponent;
-  let fixture: ComponentFixture<LogbookOutComponent>;
+describe('LogbookOutRegisterComponent', () => {
+  let component: LogbookOutRegisterComponent;
+  let fixture: ComponentFixture<LogbookOutRegisterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogbookOutComponent ]
+      declarations: [ LogbookOutRegisterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LogbookOutComponent);
+    fixture = TestBed.createComponent(LogbookOutRegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

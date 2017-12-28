@@ -1,23 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {CheckpointService} from "../checkpoint.service";
-import {HOURS, MINUTES} from "../../core/exa-utils/exa-constants";
+import {CheckpointService} from "../../checkpoint.service";
+import {HOURS, MINUTES} from "../../../core/exa-utils/exa-constants";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Observable} from "rxjs/Observable";
-import {Parameter} from "../../model/business/parameter";
-import {ViewportStateService} from "../../core/exa-services/exa-viewport/viewport-state.service";
-import {ViewportBreakpoint} from "../../model/core/viewport-breakpoint.enum";
-import {dateToString} from "../../core/exa-utils/exa-converters";
+import {Parameter} from "../../../model/business/parameter";
+import {ViewportStateService} from "../../../core/exa-services/exa-viewport/viewport-state.service";
+import {ViewportBreakpoint} from "../../../model/core/viewport-breakpoint.enum";
+import {dateToString} from "../../../core/exa-utils/exa-converters";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {LogbookUpdateOut} from "../../model/logbook/logbook-update-out";
+import {LogbookUpdateOut} from "../../../model/logbook/logbook-update-out";
 import 'rxjs/add/operator/switchMap';
-import {Logbook} from "../../model/logbook/logbook";
+import {Logbook} from "../../../model/logbook/logbook";
 
 @Component({
-  selector: 'exp-logbook-out',
-  templateUrl: './logbook-out.component.html',
-  styleUrls: ['./logbook-out.component.scss']
+  selector: 'exp-logbook-out-register',
+  templateUrl: './logbook-out-register.component.html',
+  styleUrls: ['./logbook-out-register.component.scss']
 })
-export class LogbookOutComponent implements OnInit {
+export class LogbookOutRegisterComponent implements OnInit {
 
   constructor(private checkPointService: CheckpointService, private vpService: ViewportStateService,
               private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute) {
@@ -92,7 +92,7 @@ export class LogbookOutComponent implements OnInit {
     const logbook: LogbookUpdateOut = this.processForm();
     console.log(logbook);
 
-    this.checkPointService.registerLogbookOut(this.id, logbook).subscribe(() => {
+    this.checkPointService.registerLogbookOutput(this.id, logbook).subscribe(() => {
       this.router.navigate(["../../"], {relativeTo: this.activatedRoute});
     });
   }

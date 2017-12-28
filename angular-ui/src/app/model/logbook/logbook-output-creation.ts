@@ -1,8 +1,7 @@
-export interface LogbookCreation {
-  inputDate: String;
+export interface LogbookOutputCreation {
+  outputDate: String;
   name: string;
-  inputReasonId: number;
-  materialTypeId: number;
+  outputReasonId: number;
   vehicleTypeId: number;
   vehiclePlate?: string;
   vehicleColorId?: number;
